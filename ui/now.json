@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "name": "zeit-open-api",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "build" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/bundle.js",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/bundle.js"
+    },
+    {
+      "src": "/favicon.ico",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "/bundle.css",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/bundle.css"
+    },
+    {
+      "src": "/swagger.yaml",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/swagger.yaml"
+    },
+    {
+      "src": "/(.*)",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/index.html"
+    }
+  ]
+}
