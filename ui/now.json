@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "alias": "open-api.zeit.sh",
   "name": "zeit-open-api",
   "builds": [
     {

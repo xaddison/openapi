@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: ZEIT API
+  title: Zeit API
   version: v2019-01-07
   x-providerName: zeit.co
   x-logo:
@@ -11,10 +11,9 @@ servers:
   - url: https://api.zeit.co
 tags:
   - name: domains
-    description: Domains API
-    externalDocs:
-      url: https://docs.zeit.co
-      description: Read more
+    description: Manage custom domains to use with ZEIT
+  - name: webhooks
+    description: Manage webhooks where you can receive ZEIT events
 components:
   securitySchemes:
     bearerAuth:
@@ -37,31 +36,117 @@ components:
       schema:
         type: string
   requestBodies:
-    aliasEvent:
+    alias:
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/aliasEvent'
+            allOf:
+              - $ref: '#/components/schemas/event'
+              - type: object
+                properties:
+                  payload:
+                    type: object
+                    required:
+                      - alias
+                    properties:
+                      alias:
+                        type: string
+                      aliasId:
+                        type: string
+                      deployment:
+                        $ref: '#/components/schemas/deployment'
+                      deploymentId:
+                        type: string
+                      deploymentUrl:
+                        type: string
+                      oldDeploymentId:
+                        type: string
+                      ruleCount:
+                        type: integer
+    deployment:
+      required: true
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/event'
+              - type: object
+                properties:
+                  payload:
+                    type: object
+                    required:
+                      - name
+                      - string
+                    properties:
+                      deployment:
+                        $ref: '#/components/schemas/deployment'
+                      deploymentId:
+                        type: string
+                      name:
+                        type: string
+                      plan:
+                        type: string
+                      project:
+                        type: string
+                      regions:
+                        type: array
+                        items:
+                          type: string
+                      scale:
+                        type: object
+                        properties:
+                          sfo1:
+                            type: object
+                            nullable: true
+                            properties:
+                              minInstances: 
+                                type: integer
+                              maxInstances:
+                                type: integer
+                          bru1:
+                            type: object
+                            nullable: true
+                            properties:
+                              minInstances:
+                                type: integer
+                              maxInstances:
+                                type: integer
+                          iad1:
+                            type: object
+                            nullable: true
+                            properties:
+                              minInstances:
+                                type: integer
+                              maxInstances:
+                                type: integer
+                      type:
+                        type: string
+                      url: 
+                        type: string
   schemas:
-    aliasEvent:
+    event:
       required:
-        - alias
+        - created
+        - id
+        - ownerId
+        - type
+        - userId
       properties:
-        alias:
-          type: string
-        aliasId:
-          type: string
-        deployment:
-          $ref: '#/components/schemas/deployment'
-        deploymentId:
-          type: string
-        deploymentUrl:
-          type: string
-        oldDeploymentId:
-          type: string
-        ruleCount:
+        created:
           type: integer
+        createdAt:
+          type: integer
+        id:
+          type: string
+        ownerId:
+          type: string
+        region:
+          type: string
+        teamId:
+          type: string
+        userId:
+          type: string
     deployment:
       required:
         - id
@@ -191,9 +276,25 @@ security:
   - bearerAuth: []
 paths:
   /v1/integrations/webhooks:
+    get:
+      operationId: getWebhooks
+      summary: Get a list of existent webhooks
+      tags: ['webhooks']
+      parameters:
+        - $ref: '#/components/parameters/teamId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: An Array of webhooks for the given account
+                type: array
+                items: 
+                  $ref: '#/components/schemas/webhook'
     post:
-      operationId: CreateWebhook
-      summary: Allows to create a webhook to subscribe to ZEIT events
+      operationId: createWebhook
+      summary: Create a new webhook
       tags: ['webhooks']
       parameters:
         - $ref: '#/components/parameters/teamId'
@@ -221,17 +322,35 @@ paths:
               schema: 
                 $ref: '#/components/schemas/webhook'
       callbacks:
-        aliasEvent:
+        alias:
           '{$request.body#/url}':
             post:
               requestBody: 
-                $ref: '#/components/requestBodies/aliasEvent'
+                $ref: '#/components/requestBodies/alias'
               responses:
                 '200':
                   description: OK
+        deployment:
+          '{#request.body#/url}':
+            post:
+              requestBody:
+                $ref: '#/components/requestBodies/deployment'
+              responses:
+                '200':
+                  description: OK
+  /v1/integrations/webhooks/:id:
+    delete:
+      operationId: deleteWebhooks
+      summary: Removes a webhook by id
+      tags: ['webhooks']
+      parameters:
+        - $ref: '#/components/parameters/teamId'
+      responses:
+        '204':
+          description: OK
   /v4/domains:
     get:
-      operationId: listDomains
+      operationId: getDomains
       summary: Gets a list of domains registered for the authenticating user.
       tags: ['domains']
       parameters:

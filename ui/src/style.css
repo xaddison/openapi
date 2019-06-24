@@ -1,0 +1,5 @@
+@import 'swagger-ui/dist/swagger-ui.css';
+
+body .information-container {
+  display: none;
+}
