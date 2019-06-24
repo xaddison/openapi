@@ -4,7 +4,7 @@
   "description": "UI for the OpenApi Spec",
   "scripts": {
     "now-build": "yarn cp-assets && webpack",
-    "cp-assets": "cpx 'src/{index.html,favicon.ico}' build/",
+    "cp-assets": "cpx 'src/{index.html,favicon.ico,swagger.yaml}' build/",
     "clean": "rimraf build"
   },
   "keywords": [
