@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Zeit API
+  title: ZEIT API
   version: v2019-01-07
   x-providerName: zeit.co
   x-logo:
@@ -16,6 +16,18 @@ tags:
       url: https://docs.zeit.co
       description: Read more
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    oauthAuthentication:
+      type: oauth2
+      description: This API uses OAuth 2 with the authorizationCode flow
+      flows:
+        authorizationCode:
+          authorizationUrl: https://zeit.co/oauth/authorize
+          tokenUrl: https://api.zeit.co/v2/oauth/access_token
+          scopes: {}
   parameters:
     teamId:
       name: teamId
@@ -58,6 +70,7 @@ components:
         - meta
       properties:
         id:
+          description: Unique identifier of the deployment
           type: string
         name:
           type: string
@@ -174,6 +187,8 @@ components:
         ownerId:
           description: Id of the owner which can be a user or a team
           type: string
+security:
+  - bearerAuth: []
 paths:
   /v1/integrations/webhooks:
     post:
@@ -216,7 +231,7 @@ paths:
                   description: OK
   /v4/domains:
     get:
-      operationId: ListDomains
+      operationId: listDomains
       summary: Gets a list of domains registered for the authenticating user.
       tags: ['domains']
       parameters:
