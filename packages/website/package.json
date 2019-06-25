@@ -4,7 +4,8 @@
   "description": "UI for the OpenApi Spec",
   "scripts": {
     "now-build": "yarn cp-assets && webpack",
-    "cp-assets": "cpx 'src/{index.html,favicon.ico,swagger.yaml}' build/",
+    "deploy": "yarn clean && yarn now-build && now --scope production",
+    "cp-assets": "cpx 'src/{index.html,favicon.ico}' build/",
     "clean": "rimraf build"
   },
   "keywords": [
@@ -14,6 +15,7 @@
   "author": "Javi Velasco <javi@zeit.co>",
   "license": "MIT",
   "dependencies": {
+    "@zeit/open-api": "*",
     "@types/node": "12.0.10",
     "@types/react": "16.8.22",
     "@zeit/ncc": "0.20.1",
