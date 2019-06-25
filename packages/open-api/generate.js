@@ -3,7 +3,7 @@ const path = require('path');
 const prettier = require("prettier");
 const YAML = require('yamljs');
 
-const inputPath = path.resolve(__dirname, '../swagger.yaml');
+const inputPath = path.resolve(__dirname, '../../swagger.yaml');
 const outputPath = path.resolve(__dirname, './swagger.json');
 
 async function main() {
