@@ -341,7 +341,7 @@ paths:
   /v1/integrations/webhooks/:id:
     delete:
       operationId: deleteWebhooks
-      summary: Removes a webhook by id
+      summary: Remove a webhook by id
       tags: ['webhooks']
       parameters:
         - $ref: '#/components/parameters/teamId'
@@ -350,7 +350,7 @@ paths:
           description: OK
   /v4/domains:
     get:
-      operationId: getDomains
+      operationId: listDomains
       summary: Gets a list of domains registered for the authenticating user.
       tags: ['domains']
       parameters:
@@ -469,4 +469,3 @@ paths:
                           - e.zeit-world.com
                           - f.zeit-world.net
                         verificationRecord: QmReErtvkKUkogSYEAFJCQVPboxRcrCygaFG8xUKinurD4
-                      
