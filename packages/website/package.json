@@ -1,6 +1,6 @@
 {
   "name": "@zeit/openapi-website",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "UI for the OpenApi Spec",
   "scripts": {
     "now-build": "yarn cp-assets && webpack",
@@ -15,10 +15,10 @@
   "author": "Javi Velasco <javi@zeit.co>",
   "license": "MIT",
   "dependencies": {
-    "@zeit/open-api": "*",
     "@types/node": "12.0.10",
     "@types/react": "16.8.22",
     "@zeit/ncc": "0.20.1",
+    "@zeit/open-api": "0.0.1",
     "cpx": "1.5.0",
     "css-loader": "3.0.0",
     "json-loader": "0.5.7",

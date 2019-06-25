@@ -1,6 +1,6 @@
 {
   "name": "@zeit/api-types",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "types": "index.d.ts",
   "files": [
