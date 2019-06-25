@@ -1,11 +1,9 @@
 {
-  "name": "@zeit/api-types",
+  "name": "@zeit/openapi",
   "version": "0.0.0",
   "description": "",
-  "types": "index.d.ts",
-  "files": [
-    "index.d.ts"
-  ],
+  "main": "index.json",
+  "files": ["index.json"],
   "scripts": {
     "build": "node generate.js",
     "prepublish": "yarn build"
