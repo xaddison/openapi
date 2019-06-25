@@ -42,7 +42,7 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/event'
+              - $ref: "#/components/schemas/event"
               - type: object
                 properties:
                   payload:
@@ -55,7 +55,7 @@ components:
                       aliasId:
                         type: string
                       deployment:
-                        $ref: '#/components/schemas/deployment'
+                        $ref: "#/components/schemas/deployment"
                       deploymentId:
                         type: string
                       deploymentUrl:
@@ -70,7 +70,7 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/event'
+              - $ref: "#/components/schemas/event"
               - type: object
                 properties:
                   payload:
@@ -80,7 +80,7 @@ components:
                       - string
                     properties:
                       deployment:
-                        $ref: '#/components/schemas/deployment'
+                        $ref: "#/components/schemas/deployment"
                       deploymentId:
                         type: string
                       name:
@@ -100,7 +100,7 @@ components:
                             type: object
                             nullable: true
                             properties:
-                              minInstances: 
+                              minInstances:
                                 type: integer
                               maxInstances:
                                 type: integer
@@ -122,7 +122,7 @@ components:
                                 type: integer
                       type:
                         type: string
-                      url: 
+                      url:
                         type: string
   schemas:
     event:
@@ -279,25 +279,25 @@ paths:
     get:
       operationId: getWebhooks
       summary: Get a list of existent webhooks
-      tags: ['webhooks']
+      tags: ["webhooks"]
       parameters:
-        - $ref: '#/components/parameters/teamId'
+        - $ref: "#/components/parameters/teamId"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 description: An Array of webhooks for the given account
                 type: array
-                items: 
-                  $ref: '#/components/schemas/webhook'
+                items:
+                  $ref: "#/components/schemas/webhook"
     post:
       operationId: createWebhook
       summary: Create a new webhook
-      tags: ['webhooks']
+      tags: ["webhooks"]
       parameters:
-        - $ref: '#/components/parameters/teamId'
+        - $ref: "#/components/parameters/teamId"
       requestBody:
         required: true
         content:
@@ -315,48 +315,48 @@ paths:
                   description: The URL ZEIT will post to when events happen
                   type: string
       responses:
-        '201':
+        "201":
           description: OK
           content:
             application/json:
-              schema: 
-                $ref: '#/components/schemas/webhook'
+              schema:
+                $ref: "#/components/schemas/webhook"
       callbacks:
         alias:
-          '{$request.body#/url}':
-            post:
-              requestBody: 
-                $ref: '#/components/requestBodies/alias'
-              responses:
-                '200':
-                  description: OK
-        deployment:
-          '{#request.body#/url}':
+          "{$request.body#/url}":
             post:
               requestBody:
-                $ref: '#/components/requestBodies/deployment'
+                $ref: "#/components/requestBodies/alias"
               responses:
-                '200':
+                "200":
+                  description: OK
+        deployment:
+          "{#request.body#/url}":
+            post:
+              requestBody:
+                $ref: "#/components/requestBodies/deployment"
+              responses:
+                "200":
                   description: OK
   /v1/integrations/webhooks/:id:
     delete:
       operationId: deleteWebhooks
       summary: Remove a webhook by id
-      tags: ['webhooks']
+      tags: ["webhooks"]
       parameters:
-        - $ref: '#/components/parameters/teamId'
+        - $ref: "#/components/parameters/teamId"
       responses:
-        '204':
+        "204":
           description: OK
   /v4/domains:
     get:
       operationId: listDomains
       summary: Gets a list of domains registered for the authenticating user.
-      tags: ['domains']
+      tags: ["domains"]
       parameters:
-        - $ref: '#/components/parameters/teamId'
+        - $ref: "#/components/parameters/teamId"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -365,9 +365,9 @@ paths:
                 required: [domains]
                 properties:
                   domains:
-                    description: 'An Array of domains for the given account'
+                    description: "An Array of domains for the given account"
                     type: array
-                    items: 
+                    items:
                       type: object
                       required:
                         - boughtAt

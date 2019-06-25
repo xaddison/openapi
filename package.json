@@ -1,0 +1,17 @@
+{
+  "name": "@zeit/openapi-project",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lerna": "lerna",
+    "prettier": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml,scss,sass}\"",
+    "prepublish": "lerna run prepublish"
+  },
+  "devDependencies": {
+    "lerna": "3.14.1",
+    "prettier": "1.17.1",
+    "release": "6.0.1"
+  }
+}

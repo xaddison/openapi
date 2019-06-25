@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "",
   "main": "index.json",
-  "files": ["index.json"],
+  "files": [
+    "index.json"
+  ],
   "scripts": {
     "build": "node generate.js",
     "prepublish": "yarn build"
