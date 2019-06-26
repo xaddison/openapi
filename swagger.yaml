@@ -50,7 +50,7 @@ components:
                 properties:
                   type:
                     type: string
-                    enum: ["deployment"]
+                    enum: ["alias"]
                   payload:
                     type: object
                     required:
