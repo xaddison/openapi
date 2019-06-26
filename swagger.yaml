@@ -96,6 +96,30 @@ components:
                         type: number
                       domainId:
                         type: string
+    domainVerify:
+      required: true
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/event"
+              - type: object
+                required:
+                  - type
+                  - payload
+                properties:
+                  type:
+                    type: string
+                    enum: ["domain-verify"]
+                  payload:
+                    type: object
+                    required:
+                      - name
+                    properties:
+                      name:
+                        type: string
+                      domainId:
+                        type: string
     domainDelete:
       required: true
       content:
@@ -406,6 +430,14 @@ paths:
             post:
               requestBody:
                 $ref: "#/components/requestBodies/domain"
+              responses:
+                "200":
+                  description: OK
+        domainVerify:
+          "{$request.body#/url}":
+            post:
+              requestBody:
+                $ref: "#/components/requestBodies/domainVerify"
               responses:
                 "200":
                   description: OK
