@@ -1,5 +1,6 @@
 {
   "name": "@zeit/openapi-project",
+  "version": "0.0.2",
   "workspaces": [
     "packages/*"
   ],
