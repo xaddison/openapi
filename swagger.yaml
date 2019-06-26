@@ -44,10 +44,11 @@ components:
                         allOf:
                             - $ref: "#/components/schemas/event"
                             - type: object
+                              required:
+                                - payload
                               properties:
                                   payload:
                                       type: object
-                                      nullable: false
                                       required:
                                           - alias
                                       properties:
@@ -73,10 +74,11 @@ components:
                         allOf:
                             - $ref: "#/components/schemas/event"
                             - type: object
+                              required:
+                                - payload
                               properties:
                                   payload:
                                       type: object
-                                      nullable: false
                                       required:
                                           - name
                                           - string
