@@ -63,5 +63,5 @@ SwaggerUI({
 	dom_id: "#container",
 	layout: "AugmentingLayout",
 	plugins: [AugmentingLayoutPlugin],
-	url: '/swagger.yaml'
+	url: "/swagger.yaml"
 });
