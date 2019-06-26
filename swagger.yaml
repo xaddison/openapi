@@ -47,6 +47,7 @@ components:
                               properties:
                                   payload:
                                       type: object
+                                      nullable: false
                                       required:
                                           - alias
                                       properties:
@@ -75,6 +76,7 @@ components:
                               properties:
                                   payload:
                                       type: object
+                                      nullable: false
                                       required:
                                           - name
                                           - string
