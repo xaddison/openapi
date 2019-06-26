@@ -122,6 +122,7 @@ components:
                                                               type: integer
                                           type:
                                               type: string
+                                              enum: [NPM, STATIC, DOCKER, LAMBDA]
                                           url:
                                               type: string
     schemas:
