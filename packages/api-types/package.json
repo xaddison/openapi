@@ -1,0 +1,21 @@
+{
+  "name": "@zeit/api-types",
+  "version": "0.0.1",
+  "description": "",
+  "author": "ZEIT",
+  "types": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "node build.js",
+    "clean": "rimraf index.d.ts",
+    "prepublish": "yarn build"
+  },
+  "devDependencies": {
+    "dtsgenerator": "2.0.7",
+    "prettier": "1.18.2",
+    "rimraf": "2.6.3",
+    "yamljs": "0.3.0"
+  }
+}

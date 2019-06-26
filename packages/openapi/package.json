@@ -1,0 +1,20 @@
+{
+  "name": "@zeit/openapi",
+  "version": "0.0.1",
+  "description": "An importable version of ZEIT OpenAPI spec",
+  "author": "ZEIT",
+  "main": "swagger.json",
+  "files": [
+    "swagger.json"
+  ],
+  "scripts": {
+    "build": "node build.js",
+    "clean": "rimraf swagger.json",
+    "prepublish": "yarn build"
+  },
+  "devDependencies": {
+    "prettier": "1.18.2",
+    "rimraf": "2.6.3",
+    "yamljs": "0.3.0"
+  }
+}

@@ -1,10 +1,10 @@
 {
-  "name": "@zeit/open-api-ui",
-  "version": "0.0.0",
+  "name": "@zeit/openapi-website",
   "description": "UI for the OpenApi Spec",
   "scripts": {
-    "now-build": "yarn cp-assets && webpack",
-    "cp-assets": "cpx 'src/{index.html,favicon.ico,swagger.yaml}' build/",
+    "now-build": "yarn cp:assets && yarn cp:swagger && webpack",
+    "cp:assets": "cpx 'src/{index.html,favicon.ico}' build/",
+    "cp:swagger": "cpx '../swagger.yaml' build/",
     "clean": "rimraf build"
   },
   "keywords": [
@@ -13,13 +13,12 @@
   ],
   "author": "Javi Velasco <javi@zeit.co>",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "@types/node": "12.0.10",
     "@types/react": "16.8.22",
     "@zeit/ncc": "0.20.1",
     "cpx": "1.5.0",
     "css-loader": "3.0.0",
-    "json-loader": "0.5.7",
     "postcss": "7.0.17",
     "postcss-import": "12.0.1",
     "postcss-loader": "3.0.0",
@@ -32,7 +31,6 @@
     "ts-loader": "6.0.4",
     "typescript": "3.5.2",
     "webpack": "4.35.0",
-    "webpack-cli": "3.3.5",
-    "yaml-loader": "0.5.0"
+    "webpack-cli": "3.3.5"
   }
 }

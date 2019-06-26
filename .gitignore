@@ -1,0 +1,7 @@
+/node_modules
+package-lock.json
+yarn-error.log
+/site/node_modules
+/site/build
+/packages/openapi/swagger.json
+/packages/api-types/index.d.ts

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "alias": "open-api.zeit.sh",
-  "name": "zeit-open-api",
+  "alias": ["open-api.zeit.sh"],
+  "name": "open-api",
   "builds": [
     {
-      "src": "package.json",
+      "src": "site/package.json",
       "use": "@now/static-build",
       "config": { "distDir": "build" }
     }
@@ -13,27 +13,22 @@
     {
       "src": "/bundle.js",
       "headers": { "cache-control": "s-maxage=0" },
-      "dest": "/bundle.js"
-    },
-    {
-      "src": "/favicon.ico",
-      "headers": { "cache-control": "s-maxage=0" },
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "/bundle.css",
-      "headers": { "cache-control": "s-maxage=0" },
-      "dest": "/bundle.css"
+      "dest": "/site/bundle.js"
     },
     {
       "src": "/swagger.yaml",
       "headers": { "cache-control": "s-maxage=0" },
-      "dest": "/swagger.yaml"
+      "dest": "/site/swagger.yaml"
+    },
+    {
+      "src": "/favicon.ico",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/site/favicon.ico"
     },
     {
       "src": "/(.*)",
       "headers": { "cache-control": "s-maxage=0" },
-      "dest": "/index.html"
+      "dest": "/site/index.html"
     }
   ]
 }
