@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Zeit API
+  title: ZEIT API
   version: v2019-01-07
   x-providerName: zeit.co
   x-logo:
