@@ -1,5 +1,6 @@
 {
   "name": "@zeit/openapi",
+  "private": false,
   "version": "0.0.10",
   "description": "An importable version of ZEIT OpenAPI spec",
   "author": "ZEIT",

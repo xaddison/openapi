@@ -1,5 +1,6 @@
 {
   "name": "@zeit/openapi-project",
+  "private": false,
   "workspaces": [
     "packages/*"
   ],
