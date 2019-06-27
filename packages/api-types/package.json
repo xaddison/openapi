@@ -15,7 +15,7 @@
     "prepublish": "yarn build"
   },
   "devDependencies": {
-    "dtsgenerator": "2.0.7",
+    "dtsgenerator": "2.0.8",
     "prettier": "1.18.2",
     "rimraf": "2.6.3",
     "yamljs": "0.3.0"

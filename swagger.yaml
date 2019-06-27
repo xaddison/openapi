@@ -3,6 +3,10 @@ info:
   title: ZEIT API
   version: v2019-01-07
   x-providerName: zeit.co
+  contact:
+    email: javi@zeit.co
+    name: Javi Velasco
+    url: zeit.co
   x-logo:
     url: https://logo-core.clearbit.com/zeit.co
 externalDocs:
@@ -368,7 +372,12 @@ paths:
       summary: Get a list of existent webhooks
       tags: ["webhooks"]
       parameters:
-        - $ref: "#/components/parameters/teamId"
+        - name: teamId
+          in: query
+          description: A team id in case you want to act on behalf of a team
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -384,7 +393,12 @@ paths:
       summary: Create a new webhook
       tags: ["webhooks"]
       parameters:
-        - $ref: "#/components/parameters/teamId"
+        - name: teamId
+          in: query
+          description: A team id in case you want to act on behalf of a team
+          required: false
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -412,14 +426,16 @@ paths:
         alias:
           "{$request.body#/url}":
             post:
+              operationId: aliasEvent
               requestBody:
                 $ref: "#/components/requestBodies/alias"
               responses:
                 "200":
                   description: OK
         deployment:
-          "{#request.body#/url}":
+          "{$request.body#/url}":
             post:
+              operationId: deploymentEvent
               requestBody:
                 $ref: "#/components/requestBodies/deployment"
               responses:
@@ -428,6 +444,7 @@ paths:
         domain:
           "{$request.body#/url}":
             post:
+              operationId: addDomainEvent
               requestBody:
                 $ref: "#/components/requestBodies/domain"
               responses:
@@ -436,6 +453,7 @@ paths:
         domainVerify:
           "{$request.body#/url}":
             post:
+              operationId: domainVerifiedEvent
               requestBody:
                 $ref: "#/components/requestBodies/domainVerify"
               responses:
@@ -444,6 +462,7 @@ paths:
         domainDelete:
           "{$request.body#/url}":
             post:
+              operationId: domainDeletedEvent
               requestBody:
                 $ref: "#/components/requestBodies/domainDelete"
               responses:
@@ -455,7 +474,12 @@ paths:
       summary: Remove a webhook by id
       tags: ["webhooks"]
       parameters:
-        - $ref: "#/components/parameters/teamId"
+        - name: teamId
+          in: query
+          description: A team id in case you want to act on behalf of a team
+          required: false
+          schema:
+            type: string
       responses:
         "204":
           description: OK
@@ -465,7 +489,12 @@ paths:
       summary: Gets a list of domains registered for the authenticating user.
       tags: ["domains"]
       parameters:
-        - $ref: "#/components/parameters/teamId"
+        - name: teamId
+          in: query
+          description: A team id in case you want to act on behalf of a team
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -593,7 +622,12 @@ paths:
           required: true
           schema:
             type: string
-        - $ref: "#/components/parameters/teamId"
+        - name: teamId
+          in: query
+          description: A team id in case you want to act on behalf of a team
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: OK
