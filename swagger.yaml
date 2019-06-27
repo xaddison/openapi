@@ -474,6 +474,30 @@ paths:
               schema:
                 type: object
                 required: [domains]
+                example:
+                  domains:
+                    - id: Qmf2RSrNz5sqt6nznp4JpAyXgT6pY65qwJJn8gESt2iKoi
+                      name: zeit.rocks
+                      cdnEnabled: false
+                      createdAt: 1549492062697
+                      boughtAt: 1549492066000
+                      expiresAt: 1581033599000
+                      nsVerifiedAt: 1549492417256
+                      orderedAt: 1549492057859
+                      serviceType: zeit.world
+                      txtVerifiedAt: null
+                      verified: true
+                      nameservers:
+                        - f.zeit-world.net
+                        - e.zeit-world.com
+                        - b.zeit-world.co.uk
+                        - c.zeit-world.org
+                      intendedNameservers:
+                        - b.zeit-world.co.uk
+                        - c.zeit-world.org
+                        - e.zeit-world.com
+                        - f.zeit-world.net
+                      verificationRecord: QmReErtvkKUkogSYEAFJCQVPboxRcrCygaFG8xUKinurD4
                 properties:
                   domains:
                     description: "An Array of domains for the given account"
@@ -557,26 +581,3 @@ paths:
                         verified:
                           description: Indicates if the domain ownership was already verified
                           type: boolean
-                      example:
-                        id: Qmf2RSrNz5sqt6nznp4JpAyXgT6pY65qwJJn8gESt2iKoi
-                        name: zeit.rocks
-                        cdnEnabled: false
-                        createdAt: 1549492062697
-                        boughtAt: 1549492066000
-                        expiresAt: 1581033599000
-                        nsVerifiedAt: 1549492417256
-                        orderedAt: 1549492057859
-                        serviceType: zeit.world
-                        txtVerifiedAt: null
-                        verified: true
-                        nameservers:
-                          - f.zeit-world.net
-                          - e.zeit-world.com
-                          - b.zeit-world.co.uk
-                          - c.zeit-world.org
-                        intendedNameservers:
-                          - b.zeit-world.co.uk
-                          - c.zeit-world.org
-                          - e.zeit-world.com
-                          - f.zeit-world.net
-                        verificationRecord: QmReErtvkKUkogSYEAFJCQVPboxRcrCygaFG8xUKinurD4
