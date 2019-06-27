@@ -9,7 +9,7 @@
     "build": "yarn prepublish",
     "clean": "lerna clean && lerna run clean",
     "prepublish": "lerna run prepublish",
-    "publish": "yarn lerna publish --force-publish",
+    "publish-stable": "yarn lerna publish --force-publish",
     "prettier": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml}\""
   },
   "devDependencies": {
