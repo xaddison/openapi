@@ -805,3 +805,31 @@ paths:
                             type: string
                           isDomainReseller:
                             type: boolean
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: not_found
+                    message: The domain with name zeit.rocks could not be found
+                    name: zeit.rocks
+                required:
+                  - error
+                properties:
+                  error:
+                    type: object
+                    required:
+                      - code
+                      - message
+                      - name
+                    properties:
+                      code:
+                        type: string
+                        enum: ['not_found']
+                      message:
+                        type: string
+                      name:
+                        type: string
