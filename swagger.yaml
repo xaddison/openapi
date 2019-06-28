@@ -215,6 +215,96 @@ components:
                         enum: [NPM, STATIC, DOCKER, LAMBDA]
                       url:
                         type: string
+    deploymentReadyEvent:
+      required: true
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/event"
+              - type: object
+                required:
+                  - type
+                  - payload
+                properties:
+                  type:
+                    type: string
+                    enum: ["deployment-ready"]
+                  payload:
+                    type: object
+                    required:
+                      - deployment
+                      - deploymentId
+                      - name
+                      - plan
+                      - project
+                      - type
+                      - url
+                    properties:
+                      deployment:
+                        $ref: "#/components/schemas/deployment"
+                      deploymentId:
+                        type: string
+                      name:
+                        type: string
+                      plan:
+                        type: string
+                      project:
+                        type: string
+                      regions:
+                        type: array
+                        items:
+                          type: string
+                      type:
+                        type: string
+                        enum: [NPM, STATIC, DOCKER, LAMBDA]
+                      url:
+                        type: string
+    deploymentErrorEvent:
+      required: true
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/event"
+              - type: object
+                required:
+                  - type
+                  - payload
+                properties:
+                  type:
+                    type: string
+                    enum: ["deployment-error"]
+                  payload:
+                    type: object
+                    required:
+                      - deployment
+                      - deploymentId
+                      - name
+                      - plan
+                      - project
+                      - type
+                      - url
+                    properties:
+                      deployment:
+                        $ref: "#/components/schemas/deployment"
+                      deploymentId:
+                        type: string
+                      name:
+                        type: string
+                      plan:
+                        type: string
+                      project:
+                        type: string
+                      regions:
+                        type: array
+                        items:
+                          type: string
+                      type:
+                        type: string
+                        enum: [NPM, STATIC, DOCKER, LAMBDA]
+                      url:
+                        type: string
   schemas:
     event:
       required:
@@ -441,6 +531,24 @@ paths:
               responses:
                 "200":
                   description: OK
+        deploymentReady:
+          "{$request.body#/url}":
+            post:
+              operationId: deploymentReadyEvent
+              requestBody:
+                $ref: "#/components/requestBodies/deploymentReadyEvent"
+              responses:
+                "200":
+                  description: OK
+        deploymentError:
+          "{$request.body#/url}":
+            post:
+              operationId: deploymentErrorEvent
+              requestBody:
+                $ref: "#/components/requestBodies/deploymentErrorEvent"
+              responses:
+                "200":
+                  description: OK
         domain:
           "{$request.body#/url}":
             post:
@@ -485,7 +593,7 @@ paths:
           description: OK
   /v4/domains:
     get:
-      operationId: listDomains
+      operationId: getDomains
       summary: Gets a list of domains registered for the authenticating user.
       tags: ["domains"]
       parameters:
