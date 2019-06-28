@@ -40,7 +40,7 @@ components:
       schema:
         type: string
   requestBodies:
-    alias:
+    aliasEvent:
       required: true
       content:
         application/json:
@@ -74,7 +74,7 @@ components:
                         type: string
                       ruleCount:
                         type: integer
-    domain:
+    domainEvent:
       required: true
       content:
         application/json:
@@ -100,7 +100,7 @@ components:
                         type: number
                       domainId:
                         type: string
-    domainVerify:
+    domainVerifyEvent:
       required: true
       content:
         application/json:
@@ -124,7 +124,7 @@ components:
                         type: string
                       domainId:
                         type: string
-    domainDelete:
+    domainDeleteEvent:
       required: true
       content:
         application/json:
@@ -148,7 +148,7 @@ components:
                         type: string
                       domainId:
                         type: string
-    deployment:
+    deploymentEvent:
       required: true
       content:
         application/json:
@@ -428,7 +428,7 @@ paths:
             post:
               operationId: aliasEvent
               requestBody:
-                $ref: "#/components/requestBodies/alias"
+                $ref: "#/components/requestBodies/aliasEvent"
               responses:
                 "200":
                   description: OK
@@ -437,7 +437,7 @@ paths:
             post:
               operationId: deploymentEvent
               requestBody:
-                $ref: "#/components/requestBodies/deployment"
+                $ref: "#/components/requestBodies/deploymentEvent"
               responses:
                 "200":
                   description: OK
@@ -446,7 +446,7 @@ paths:
             post:
               operationId: addDomainEvent
               requestBody:
-                $ref: "#/components/requestBodies/domain"
+                $ref: "#/components/requestBodies/domainEvent"
               responses:
                 "200":
                   description: OK
@@ -455,7 +455,7 @@ paths:
             post:
               operationId: domainVerifiedEvent
               requestBody:
-                $ref: "#/components/requestBodies/domainVerify"
+                $ref: "#/components/requestBodies/domainVerifyEvent"
               responses:
                 "200":
                   description: OK
@@ -464,7 +464,7 @@ paths:
             post:
               operationId: domainDeletedEvent
               requestBody:
-                $ref: "#/components/requestBodies/domainDelete"
+                $ref: "#/components/requestBodies/domainDeleteEvent"
               responses:
                 "200":
                   description: OK
