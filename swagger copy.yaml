@@ -1,18 +1,18 @@
-openapi: 0.0.1
+openapi: 3.0.0
 info:
-  title: TULIP API
-  version: v2021-04-05
-  x-providerName:
+  title: ZEIT API
+  version: v2019-01-07
+  x-providerName: zeit.co
   contact:
-    email: xander@tulipshare.com
-    name:  Xander Addison
-    url:  www.tulipshare.com
+    email: javi@zeit.co
+    name: Javi Velasco
+    url: zeit.co
   x-logo:
-    url:
+    url: https://logo-core.clearbit.com/zeit.co
 externalDocs:
-  url:
+  url: https://zeit.co/docs/api/
 servers:
-  - url:
+  - url: https://api.zeit.co
 tags:
   - name: domains
     description: Manage custom domains to use with ZEIT
