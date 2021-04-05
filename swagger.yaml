@@ -1,25 +1,22 @@
 ---
 swagger: "2.0"
 info:
-  description: "This is a sample server Petstore server.  You can find out more about\
-    \     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net,\
-    \ #swagger](http://swagger.io/irc/).      For this sample, you can use the api\
-    \ key `special-key` to test the authorization     filters."
-  version: "1.0.0"
-  title: "Swagger Petstore"
+  description: "TulipShare Intergration"
+  version: "0.0.1"
+  title: "TulipShare.com"
   termsOfService: "http://swagger.io/terms/"
   contact:
-    email: "apiteam@swagger.io"
+    email: "xander@tulipshare.com"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
-basePath: "/v2"
+host: "api.drivewealth.io"
+basePath: "/v1"
 tags:
-- name: "pet"
-  description: "Everything about your Pets"
+- name: "signups/live"
+  description:
   externalDocs:
-    description: "Find out more"
+    description:
     url: "http://swagger.io"
 - name: "store"
   description: "Access to Petstore orders"
@@ -32,13 +29,13 @@ schemes:
 - "https"
 - "http"
 paths:
-  /pet:
+  signups/live:
     post:
       tags:
-      - "pet"
-      summary: "Add a new pet to the store"
+      - "userID"
+      summary: "Add a new unique userID to allow an account be added"
       description: ""
-      operationId: "addPet"
+      operationId: "CreateUser"
       consumes:
       - "application/json"
       - "application/xml"
@@ -48,10 +45,10 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Pet object that needs to be added to the store"
+        description: "UserID objects that needs to be added"
         required: true
         schema:
-          $ref: "#/definitions/Pet"
+          $ref: "https://api.drivewealth.io/v1/signups/live"
       responses:
         "405":
           description: "Invalid input"
