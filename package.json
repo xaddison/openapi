@@ -14,7 +14,7 @@
     "prettier": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml}\""
   },
   "devDependencies": {
-    "lerna": "3.15.0"
+    "lerna": "4.0.0"
   },
   "version": "0.0.3"
 }
