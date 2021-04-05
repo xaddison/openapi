@@ -1,943 +1,768 @@
-openapi: 0.0.1
+---
+swagger: "2.0"
 info:
-  title: TULIP API
-  version: v2021-04-05
-  x-providerName:
+  description: "This is a sample server Petstore server.  You can find out more about\
+    \     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net,\
+    \ #swagger](http://swagger.io/irc/).      For this sample, you can use the api\
+    \ key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
   contact:
-    email: xander@tulipshare.com
-    name:  Xander Addison
-    url:  www.tulipshare.com
-  x-logo:
-    url:
-externalDocs:
-  url:
-servers:
-  - url:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
 tags:
-  - name: domains
-    description: Manage custom domains to use with ZEIT
-  - name: webhooks
-    description: Manage webhooks where you can receive ZEIT events
-components:
-  securitySchemes:
-    bearerAuth:
-      type: https
-      scheme: bearer
-    oauthAuthentication:
-      type: oauth2
-      description: This API uses OAuth 2 with the authorizationCode flow
-      flows:
-        authorizationCode:
-          authorizationUrl: https://zeit.co/oauth/authorize
-          tokenUrl: https://api.zeit.co/v2/oauth/access
-          scopes: {}
-  parameters:
-    teamId:
-      name: teamId
-      in: query
-      description: A team id in case you want to act on behalf of a team
-      required: false
-      schema:
-        type: string
-  requestBodies:
-    aliasEvent:
-      required: true
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/event"
-              - type: object
-                required:
-                  - type
-                  - payload
-                properties:
-                  type:
-                    type: string
-                    enum: ["alias"]
-                  payload:
-                    type: object
-                    required:
-                      - alias
-                    properties:
-                      alias:
-                        type: string
-                      aliasId:
-                        type: string
-                      deployment:
-                        $ref: "#/components/schemas/deployment"
-                      deploymentId:
-                        type: string
-                      deploymentUrl:
-                        type: string
-                      oldDeploymentId:
-                        type: string
-                      ruleCount:
-                        type: integer
-    domainEvent:
-      required: true
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/event"
-              - type: object
-                required:
-                  - type
-                  - payload
-                properties:
-                  type:
-                    type: string
-                    enum: ["domain"]
-                  payload:
-                    type: object
-                    required:
-                      - name
-                    properties:
-                      name:
-                        type: string
-                      zoneId:
-                        type: number
-                      domainId:
-                        type: string
-    domainVerifyEvent:
-      required: true
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/event"
-              - type: object
-                required:
-                  - type
-                  - payload
-                properties:
-                  type:
-                    type: string
-                    enum: ["domain-verify"]
-                  payload:
-                    type: object
-                    required:
-                      - name
-                    properties:
-                      name:
-                        type: string
-                      domainId:
-                        type: string
-    domainDeleteEvent:
-      required: true
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/event"
-              - type: object
-                required:
-                  - type
-                  - payload
-                properties:
-                  type:
-                    type: string
-                    enum: ["domain-delete"]
-                  payload:
-                    type: object
-                    required:
-                      - name
-                    properties:
-                      name:
-                        type: string
-                      domainId:
-                        type: string
-    deploymentEvent:
-      required: true
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/event"
-              - type: object
-                required:
-                  - type
-                  - payload
-                properties:
-                  type:
-                    type: string
-                    enum: ["deployment"]
-                  payload:
-                    type: object
-                    required:
-                      - name
-                      - string
-                    properties:
-                      deployment:
-                        $ref: "#/components/schemas/deployment"
-                      deploymentId:
-                        type: string
-                      name:
-                        type: string
-                      plan:
-                        type: string
-                      project:
-                        type: string
-                      regions:
-                        type: array
-                        items:
-                          type: string
-                      scale:
-                        type: object
-                        properties:
-                          sfo1:
-                            type: object
-                            nullable: true
-                            properties:
-                              minInstances:
-                                type: integer
-                              maxInstances:
-                                type: integer
-                          bru1:
-                            type: object
-                            nullable: true
-                            properties:
-                              minInstances:
-                                type: integer
-                              maxInstances:
-                                type: integer
-                          iad1:
-                            type: object
-                            nullable: true
-                            properties:
-                              minInstances:
-                                type: integer
-                              maxInstances:
-                                type: integer
-                      type:
-                        type: string
-                        enum: [NPM, STATIC, DOCKER, LAMBDA]
-                      url:
-                        type: string
-    deploymentReadyEvent:
-      required: true
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/event"
-              - type: object
-                required:
-                  - type
-                  - payload
-                properties:
-                  type:
-                    type: string
-                    enum: ["deployment-ready"]
-                  payload:
-                    type: object
-                    required:
-                      - deployment
-                      - deploymentId
-                      - name
-                      - plan
-                      - project
-                      - type
-                      - url
-                    properties:
-                      deployment:
-                        $ref: "#/components/schemas/deployment"
-                      deploymentId:
-                        type: string
-                      name:
-                        type: string
-                      plan:
-                        type: string
-                      project:
-                        type: string
-                      regions:
-                        type: array
-                        items:
-                          type: string
-                      type:
-                        type: string
-                        enum: [NPM, STATIC, DOCKER, LAMBDA]
-                      url:
-                        type: string
-    deploymentErrorEvent:
-      required: true
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/event"
-              - type: object
-                required:
-                  - type
-                  - payload
-                properties:
-                  type:
-                    type: string
-                    enum: ["deployment-error"]
-                  payload:
-                    type: object
-                    required:
-                      - deployment
-                      - deploymentId
-                      - name
-                      - plan
-                      - project
-                      - type
-                      - url
-                    properties:
-                      deployment:
-                        $ref: "#/components/schemas/deployment"
-                      deploymentId:
-                        type: string
-                      name:
-                        type: string
-                      plan:
-                        type: string
-                      project:
-                        type: string
-                      regions:
-                        type: array
-                        items:
-                          type: string
-                      type:
-                        type: string
-                        enum: [NPM, STATIC, DOCKER, LAMBDA]
-                      url:
-                        type: string
-  schemas:
-    event:
-      required:
-        - created
-        - id
-        - ownerId
-        - type
-        - userId
-      properties:
-        created:
-          type: integer
-        createdAt:
-          type: integer
-        id:
-          type: string
-        ownerId:
-          type: string
-        region:
-          type: string
-        teamId:
-          type: string
-        userId:
-          type: string
-    deployment:
-      required:
-        - id
-        - name
-        - url
-        - meta
-      properties:
-        id:
-          description: Unique identifier of the deployment
-          type: string
-        name:
-          type: string
-        url:
-          type: string
-        meta:
-          type: object
-          properties:
-            BK_JOB_ID:
-              type: string
-            BUILD_NUMBER:
-              type: string
-            CIRCLE_BUILD_URL:
-              type: string
-            CIRCLE_COMPARE_URL:
-              type: string
-            COMMIT:
-              type: string
-            created-by:
-              type: string
-            created_by:
-              type: string
-            deploymentPrefix:
-              type: string
-            GITHUB_SHA:
-              type: string
-            githubCommitAuthorLogin:
-              type: string
-            githubCommitAuthorName:
-              type: string
-            githubCommitMessage:
-              type: string
-            githubCommitOrg:
-              type: string
-            githubCommitRef:
-              type: string
-            githubCommitRepo:
-              type: string
-            githubCommitSha:
-              type: string
-            githubDeployment:
-              type: string
-            githubDeploymentAuthorizedBy:
-              type: string
-            githubOrg:
-              type: string
-            githubPrId:
-              type: string
-            githubRepo:
-              type: string
-            gitlabCommitAuthorAvatar:
-              type: string
-            gitlabCommitAuthorLogin:
-              type: string
-            gitlabCommitAuthorName:
-              type: string
-            gitlabCommitMessage:
-              type: string
-            gitlabCommitRef:
-              type: string
-            gitlabCommitSha:
-              type: string
-            gitlabDeployment:
-              type: string
-            gitlabProjectId:
-              type: string
-            gitlabProjectName:
-              type: string
-            gitlabProjectNamespace:
-              type: string
-            gitlabProjectPath:
-              type: string
-            gitSha:
-              type: string
-            gl:
-              type: string
-            targetDomain:
-              type: string
-            TRAVIS_BUILD_WEB_URL:
-              type: string
-            useOldPipeline:
-              type: string
-    webhook:
-      description: A webhook subscription with an URL where ZEIT will POST events.
-      required:
-        - id
-        - url
-        - name
-        - events
-        - onwerId
-        - createdAt
-        - configurationId
-      properties:
-        id:
-          description: Id of the webhook
-          type: string
-        events:
-          description: An array with the event identifiers that the webhook can receive
-          type: array
-          items:
-            type: string
-        url:
-          description: The URL where the POST request will be sent
-          type: string
-        name:
-          description: A name for the webhook that serves as a canonical description
-          type: string
-        configurationId:
-          description: An id that corresponds to the configuration that generated the token that was used to create the webhook
-          type: string
-        createdAt:
-          description: Timestamp that tells when was the webhook created
-          type: integer
-        ownerId:
-          description: Id of the owner which can be a user or a team
-          type: string
-security:
-  - bearerAuth: []
+- name: "pet"
+  description: "Everything about your Pets"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "store"
+  description: "Access to Petstore orders"
+- name: "user"
+  description: "Operations about user"
+  externalDocs:
+    description: "Find out more about our store"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
 paths:
-  /v1/integrations/webhooks:
-    get:
-      operationId: getWebhooks
-      summary: Get a list of existent webhooks
-      tags: ["webhooks"]
-      parameters:
-        - name: teamId
-          in: query
-          description: A team id in case you want to act on behalf of a team
-          required: false
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                description: An Array of webhooks for the given account
-                type: array
-                items:
-                  $ref: "#/components/schemas/webhook"
+  /pet:
     post:
-      operationId: createWebhook
-      summary: Create a new webhook
-      tags: ["webhooks"]
+      tags:
+      - "pet"
+      summary: "Add a new pet to the store"
+      description: ""
+      operationId: "addPet"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
       parameters:
-        - name: teamId
-          in: query
-          description: A team id in case you want to act on behalf of a team
-          required: false
-          schema:
-            type: string
-      requestBody:
+      - in: "body"
+        name: "body"
+        description: "Pet object that needs to be added to the store"
         required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-                - url
-              properties:
-                name:
-                  description: A name to assign to the webhook
-                  type: string
-                url:
-                  description: The URL ZEIT will post to when events happen
-                  type: string
+        schema:
+          $ref: "#/definitions/Pet"
       responses:
-        "201":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/webhook"
-      callbacks:
-        alias:
-          "{$request.body#/url}":
-            post:
-              operationId: aliasEvent
-              requestBody:
-                $ref: "#/components/requestBodies/aliasEvent"
-              responses:
-                "200":
-                  description: OK
-        deployment:
-          "{$request.body#/url}":
-            post:
-              operationId: deploymentEvent
-              requestBody:
-                $ref: "#/components/requestBodies/deploymentEvent"
-              responses:
-                "200":
-                  description: OK
-        deploymentReady:
-          "{$request.body#/url}":
-            post:
-              operationId: deploymentReadyEvent
-              requestBody:
-                $ref: "#/components/requestBodies/deploymentReadyEvent"
-              responses:
-                "200":
-                  description: OK
-        deploymentError:
-          "{$request.body#/url}":
-            post:
-              operationId: deploymentErrorEvent
-              requestBody:
-                $ref: "#/components/requestBodies/deploymentErrorEvent"
-              responses:
-                "200":
-                  description: OK
-        domain:
-          "{$request.body#/url}":
-            post:
-              operationId: addDomainEvent
-              requestBody:
-                $ref: "#/components/requestBodies/domainEvent"
-              responses:
-                "200":
-                  description: OK
-        domainVerify:
-          "{$request.body#/url}":
-            post:
-              operationId: domainVerifiedEvent
-              requestBody:
-                $ref: "#/components/requestBodies/domainVerifyEvent"
-              responses:
-                "200":
-                  description: OK
-        domainDelete:
-          "{$request.body#/url}":
-            post:
-              operationId: domainDeletedEvent
-              requestBody:
-                $ref: "#/components/requestBodies/domainDeleteEvent"
-              responses:
-                "200":
-                  description: OK
-  /v1/integrations/webhooks/:id:
-    delete:
-      operationId: deleteWebhooks
-      summary: Remove a webhook by id
-      tags: ["webhooks"]
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "Pet"
+    put:
+      tags:
+      - "pet"
+      summary: "Update an existing pet"
+      description: ""
+      operationId: "updatePet"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
       parameters:
-        - name: teamId
-          in: query
-          description: A team id in case you want to act on behalf of a team
-          required: false
-          schema:
-            type: string
+      - in: "body"
+        name: "body"
+        description: "Pet object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Pet"
       responses:
-        "204":
-          description: OK
-  /v4/domains:
-    get:
-      operationId: getDomains
-      summary: Gets a list of domains registered for the authenticating user.
-      tags: ["domains"]
-      parameters:
-        - name: teamId
-          in: query
-          description: A team id in case you want to act on behalf of a team
-          required: false
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required: [domains]
-                example:
-                  domains:
-                    - id: Qmf2RSrNz5sqt6nznp4JpAyXgT6pY65qwJJn8gESt2iKoi
-                      name: zeit.rocks
-                      cdnEnabled: false
-                      createdAt: 1549492062697
-                      boughtAt: 1549492066000
-                      expiresAt: 1581033599000
-                      nsVerifiedAt: 1549492417256
-                      orderedAt: 1549492057859
-                      serviceType: zeit.world
-                      txtVerifiedAt: null
-                      verified: true
-                      nameservers:
-                        - f.zeit-world.net
-                        - e.zeit-world.com
-                        - b.zeit-world.co.uk
-                        - c.zeit-world.org
-                      intendedNameservers:
-                        - b.zeit-world.co.uk
-                        - c.zeit-world.org
-                        - e.zeit-world.com
-                        - f.zeit-world.net
-                      verificationRecord: QmReErtvkKUkogSYEAFJCQVPboxRcrCygaFG8xUKinurD4
-                properties:
-                  domains:
-                    description: "An Array of domains for the given account"
-                    type: array
-                    items:
-                      type: object
-                      required:
-                        - boughtAt
-                        - cdnEnabled
-                        - createdAt
-                        - expiresAt
-                        - id
-                        - intendedNameservers
-                        - name
-                        - nameservers
-                        - nsVerifiedAt
-                        - serviceType
-                        - txtVerifiedAt
-                        - verificationRecord
-                        - verified
-                      properties:
-                        boughtAt:
-                          nullable: true
-                          description: A timestamp to tell when the domain was purchase if it was purchased with ZEIT
-                          type: integer
-                        cdnEnabled:
-                          description: Wether the Cloudfare CDN is enabled for the domain or not
-                          type: boolean
-                        createdAt:
-                          description: A timestamp that shows when the domain was created
-                          nullable: true
-                          type: integer
-                        expiresAt:
-                          description: The expiration date for the domain in case it's in ZEIT
-                          nullable: true
-                          type: integer
-                        id:
-                          description: The unique identifier of the domain.
-                          type: string
-                        intendedNameservers:
-                          description: The set of nameservers ZEIT requires the user to set to verify the domain with Nameservers
-                          type: array
-                          items:
-                            description: An intended nameserver for the domain
-                            type: string
-                        name:
-                          description: The domain name including the TLD
-                          type: string
-                        nameservers:
-                          description: The current nameservers we have detected for the domain
-                          type: array
-                          items:
-                            description: A nameserver the domain has set
-                            type: string
-                        nsVerifiedAt:
-                          description: The timestamp of the last time the domain was verified using Nameservers
-                          nullable: true
-                          type: integer
-                        orderedAt:
-                          description: A timestamp indicating when the domain was ordered if it was purchased with ZEIT
-                          nullable: true
-                          type: integer
-                        serviceType:
-                          description: Indicates the current DNS service the domain is using
-                          type: string
-                          enum:
-                            - zeit.world
-                            - external
-                            - na
-                        transferredAt:
-                          description: If the domain was transferred to ZEIT, it indicates the timestamp for when the transfer was started
-                          nullable: true
-                          type: integer
-                        txtVerifiedAt:
-                          description: The timestamp of the last time the domain was verified using a TXT record
-                          nullable: true
-                          type: integer
-                        verificationRecord:
-                          description: Indicates the verification record that should be used to verify the domain using a TXT record
-                          type: string
-                        verified:
-                          description: Indicates if the domain ownership was already verified
-                          type: boolean
-  /v4/domains/{name}:
-    get:
-      operationId: getDomain
-      summary: Get a domain for the authenticated user by name
-      tags: ["domains"]
-      parameters:
-        - name: name
-          in: path
-          description: A team id in case you want to act on behalf of a team
-          required: true
-          schema:
-            type: string
-        - name: teamId
-          in: query
-          description: A team id in case you want to act on behalf of a team
-          required: false
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required: [domain]
-                example:
-                  domain:
-                    id: EmTbe5CEJyTk2yVAHBUWy4A3sRusca3GCwRjTC1bpeVnt1
-                    name: my-zeit-domain.website
-                    serviceType: external
-                    nsVerifiedAt: null
-                    txtVerifiedAt: null
-                    cdnEnabled: false
-                    createdAt: 1544658552174
-                    expiresAt: null
-                    boughtAt: null
-                    verificationRecord: YMc9dEJKbAncYtTqSH8dp1j5NXycfEzyjkzBJ3m3UGwR43
-                    verified: false
-                    nameservers:
-                      - ns1.nameserver.net
-                      - ns2.nameserver.net
-                    intendedNameservers:
-                      - a.zeit-world.co.uk
-                      - c.zeit-world.org
-                      - d.zeit-world.com
-                      - f.zeit-world.net
-                    creator:
-                      id: ZspSRT4ljIEEmMHgoDwKWDei
-                      customerId: cus_COxSxT1ysva5Xa
-                      username: zeit_user
-                      email: demo@zeit.co
-                    suffix: false
-                    aliases: []
-                    certs: []
-                properties:
-                  domain:
-                    description: The domain information
-                    type: object
-                    required:
-                      - boughtAt
-                      - cdnEnabled
-                      - createdAt
-                      - expiresAt
-                      - id
-                      - intendedNameservers
-                      - name
-                      - nameservers
-                      - nsVerifiedAt
-                      - serviceType
-                      - txtVerifiedAt
-                      - verificationRecord
-                      - verified
-                      - suffix
-                      - aliases
-                      - certs
-                      - creator
-                    properties:
-                      boughtAt:
-                        nullable: true
-                        description: A timestamp to tell when the domain was purchase if it was purchased with ZEIT
-                        type: integer
-                      cdnEnabled:
-                        description: Wether the Cloudfare CDN is enabled for the domain or not
-                        type: boolean
-                      createdAt:
-                        description: A timestamp that shows when the domain was created
-                        nullable: true
-                        type: integer
-                      expiresAt:
-                        description: The expiration date for the domain in case it's in ZEIT
-                        nullable: true
-                        type: integer
-                      id:
-                        description: The unique identifier of the domain.
-                        type: string
-                      intendedNameservers:
-                        description: The set of nameservers ZEIT requires the user to set to verify the domain with Nameservers
-                        type: array
-                        items:
-                          description: An intended nameserver for the domain
-                          type: string
-                      name:
-                        description: The domain name including the TLD
-                        type: string
-                      nameservers:
-                        description: The current nameservers we have detected for the domain
-                        type: array
-                        items:
-                          description: A nameserver the domain has set
-                          type: string
-                      nsVerifiedAt:
-                        description: The timestamp of the last time the domain was verified using Nameservers
-                        nullable: true
-                        type: integer
-                      orderedAt:
-                        description: A timestamp indicating when the domain was ordered if it was purchased with ZEIT
-                        nullable: true
-                        type: integer
-                      serviceType:
-                        description: Indicates the current DNS service the domain is using
-                        type: string
-                        enum:
-                          - zeit.world
-                          - external
-                          - na
-                      transferredAt:
-                        description: If the domain was transferred to ZEIT, it indicates the timestamp for when the transfer was started
-                        nullable: true
-                        type: integer
-                      txtVerifiedAt:
-                        description: The timestamp of the last time the domain was verified using a TXT record
-                        nullable: true
-                        type: integer
-                      verificationRecord:
-                        description: Indicates the verification record that should be used to verify the domain using a TXT record
-                        type: string
-                      verified:
-                        description: Indicates if the domain ownership was already verified
-                        type: boolean
-                      suffix:
-                        description: Tells if the domain is being used as a custom suffix for the user or team
-                        type: boolean
-                      aliases:
-                        description: Collection of aliases where the domain is used.
-                        type: array
-                        items:
-                          type: object
-                          required:
-                            - id
-                            - alias
-                            - created
-                          properties:
-                            id:
-                              type: string
-                            alias:
-                              type: string
-                            created:
-                              type: integer
-                      certs:
-                        description: Collection of certs for the domain
-                        type: array
-                        items:
-                          type: object
-                          required:
-                            - id
-                            - cns
-                            - created
-                          properties:
-                            id:
-                              type: string
-                            cns:
-                              type: array
-                              items:
-                                type: string
-                            created:
-                              type: integer
-                      creator:
-                        description: Information about who added the domain
-                        type: object
-                        required:
-                          - id
-                          - email
-                          - username
-                        properties:
-                          customerId:
-                            type: string
-                          email:
-                            type: string
-                          id:
-                            type: string
-                          username:
-                            type: string
-                          isDomainReseller:
-                            type: boolean
+        "400":
+          description: "Invalid ID supplied"
         "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  error:
-                    code: not_found
-                    message: The domain with name zeit.rocks could not be found
-                    name: zeit.rocks
-                required:
-                  - error
-                properties:
-                  error:
-                    type: object
-                    required:
-                      - code
-                      - message
-                      - name
-                    properties:
-                      code:
-                        type: string
-                        enum: ['not_found']
-                      message:
-                        type: string
-                      name:
-                        type: string
+          description: "Pet not found"
+        "405":
+          description: "Validation exception"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "Pet"
+  /pet/findByStatus:
+    get:
+      tags:
+      - "pet"
+      summary: "Finds Pets by status"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findPetsByStatus"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "status"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+          default: "available"
+          enum:
+          - "available"
+          - "pending"
+          - "sold"
+        collectionFormat: "multi"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Pet"
+        "400":
+          description: "Invalid status value"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "Pet"
+  /pet/findByTags:
+    get:
+      tags:
+      - "pet"
+      summary: "Finds Pets by tags"
+      description: "Muliple tags can be provided with comma separated strings. Use\
+        \         tag1, tag2, tag3 for testing."
+      operationId: "findPetsByTags"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "tags"
+        in: "query"
+        description: "Tags to filter by"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Pet"
+        "400":
+          description: "Invalid tag value"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      deprecated: true
+      x-swagger-router-controller: "Pet"
+  /pet/{petId}:
+    get:
+      tags:
+      - "pet"
+      summary: "Find pet by ID"
+      description: "Returns a single pet"
+      operationId: "getPetById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "petId"
+        in: "path"
+        description: "ID of pet to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Pet"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Pet not found"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "Pet"
+    post:
+      tags:
+      - "pet"
+      summary: "Updates a pet in the store with form data"
+      description: ""
+      operationId: "updatePetWithForm"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "petId"
+        in: "path"
+        description: "ID of pet that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "name"
+        in: "formData"
+        description: "Updated name of the pet"
+        required: false
+        type: "string"
+      - name: "status"
+        in: "formData"
+        description: "Updated status of the pet"
+        required: false
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "Pet"
+    delete:
+      tags:
+      - "pet"
+      summary: "Deletes a pet"
+      description: ""
+      operationId: "deletePet"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "petId"
+        in: "path"
+        description: "Pet id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Pet not found"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "Pet"
+  /pet/{petId}/uploadImage:
+    post:
+      tags:
+      - "pet"
+      summary: "uploads an image"
+      description: ""
+      operationId: "uploadFile"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "petId"
+        in: "path"
+        description: "ID of pet to update"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "additionalMetadata"
+        in: "formData"
+        description: "Additional data to pass to server"
+        required: false
+        type: "string"
+      - name: "file"
+        in: "formData"
+        description: "file to upload"
+        required: false
+        type: "file"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      x-swagger-router-controller: "Pet"
+  /store/inventory:
+    get:
+      tags:
+      - "store"
+      summary: "Returns pet inventories by status"
+      description: "Returns a map of status codes to quantities"
+      operationId: "getInventory"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "object"
+            additionalProperties:
+              type: "integer"
+              format: "int32"
+      security:
+      - api_key: []
+      x-swagger-router-controller: "Store"
+  /store/order:
+    post:
+      tags:
+      - "store"
+      summary: "Place an order for a pet"
+      description: ""
+      operationId: "placeOrder"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "order placed for purchasing the pet"
+        required: true
+        schema:
+          $ref: "#/definitions/Order"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        "400":
+          description: "Invalid Order"
+      x-swagger-router-controller: "Store"
+  /store/order/{orderId}:
+    get:
+      tags:
+      - "store"
+      summary: "Find purchase order by ID"
+      description: "For valid response try integer IDs with value >= 1 and <= 10.\
+        \         Other values will generated exceptions"
+      operationId: "getOrderById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "orderId"
+        in: "path"
+        description: "ID of pet that needs to be fetched"
+        required: true
+        type: "integer"
+        maximum: 10
+        minimum: 1
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Order not found"
+      x-swagger-router-controller: "Store"
+    delete:
+      tags:
+      - "store"
+      summary: "Delete purchase order by ID"
+      description: "For valid response try integer IDs with positive integer value.\
+        \         Negative or non-integer values will generate API errors"
+      operationId: "deleteOrder"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "orderId"
+        in: "path"
+        description: "ID of the order that needs to be deleted"
+        required: true
+        type: "integer"
+        minimum: 1
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Order not found"
+      x-swagger-router-controller: "Store"
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Create user"
+      description: "This can only be done by the logged in user."
+      operationId: "createUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /user/createWithArray:
+    post:
+      tags:
+      - "user"
+      summary: "Creates list of users with given input array"
+      description: ""
+      operationId: "createUsersWithArrayInput"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /user/createWithList:
+    post:
+      tags:
+      - "user"
+      summary: "Creates list of users with given input array"
+      description: ""
+      operationId: "createUsersWithListInput"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /user/login:
+    get:
+      tags:
+      - "user"
+      summary: "Logs user into the system"
+      description: ""
+      operationId: "loginUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "The user name for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login in clear text"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          headers:
+            X-Rate-Limit:
+              type: "integer"
+              format: "int32"
+              description: "calls per hour allowed by the user"
+            X-Expires-After:
+              type: "string"
+              format: "date-time"
+              description: "date in UTC when token expires"
+          schema:
+            type: "string"
+        "400":
+          description: "Invalid username/password supplied"
+      x-swagger-router-controller: "User"
+  /user/logout:
+    get:
+      tags:
+      - "user"
+      summary: "Logs out current logged in user session"
+      description: ""
+      operationId: "logoutUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /user/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by user name"
+      description: ""
+      operationId: "getUserByName"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be fetched. Use user1 for testing. "
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "400":
+          description: "Invalid username supplied"
+        "404":
+          description: "User not found"
+      x-swagger-router-controller: "User"
+    put:
+      tags:
+      - "user"
+      summary: "Updated user"
+      description: "This can only be done by the logged in user."
+      operationId: "updateUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "name that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "400":
+          description: "Invalid user supplied"
+        "404":
+          description: "User not found"
+      x-swagger-router-controller: "User"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid username supplied"
+        "404":
+          description: "User not found"
+      x-swagger-router-controller: "User"
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Order:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      petId:
+        type: "integer"
+        format: "int64"
+      quantity:
+        type: "integer"
+        format: "int32"
+      shipDate:
+        type: "string"
+        format: "date-time"
+      status:
+        type: "string"
+        description: "Order Status"
+        enum:
+        - "placed"
+        - "approved"
+        - "delivered"
+      complete:
+        type: "boolean"
+        default: false
+    xml:
+      name: "Order"
+    example:
+      petId: 6
+      quantity: 1
+      id: 0
+      shipDate: "2000-01-23T04:56:07.000+00:00"
+      complete: false
+      status: "placed"
+  Category:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Category"
+    example:
+      name: "name"
+      id: 6
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "User Status"
+    xml:
+      name: "User"
+    example:
+      firstName: "firstName"
+      lastName: "lastName"
+      password: "password"
+      userStatus: 6
+      phone: "phone"
+      id: 0
+      email: "email"
+      username: "username"
+  Tag:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Tag"
+    example:
+      name: "name"
+      id: 1
+  Pet:
+    type: "object"
+    required:
+    - "name"
+    - "photoUrls"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      category:
+        $ref: "#/definitions/Category"
+      name:
+        type: "string"
+        example: "doggie"
+      photoUrls:
+        type: "array"
+        xml:
+          name: "photoUrl"
+          wrapped: true
+        items:
+          type: "string"
+      tags:
+        type: "array"
+        xml:
+          name: "tag"
+          wrapped: true
+        items:
+          $ref: "#/definitions/Tag"
+      status:
+        type: "string"
+        description: "pet status in the store"
+        enum:
+        - "available"
+        - "pending"
+        - "sold"
+    xml:
+      name: "Pet"
+    example:
+      photoUrls:
+      - "photoUrls"
+      - "photoUrls"
+      name: "doggie"
+      id: 0
+      category:
+        name: "name"
+        id: 6
+      tags:
+      - name: "name"
+        id: 1
+      - name: "name"
+        id: 1
+      status: "available"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+    example:
+      code: 0
+      type: "type"
+      message: "message"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
