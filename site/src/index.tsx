@@ -1,7 +1,7 @@
 import "./style.css";
 import React, { Component } from "react";
 
-import SwaggerUI from "swagger-ui";
+const SwaggerUI = require("swagger-ui");
 
 type AugmentingLayoutP = {
 	getComponent(comp: string, nose: boolean): any;

@@ -5,3 +5,4 @@ yarn-error.log
 /site/build
 /packages/openapi/swagger.json
 /packages/api-types/index.d.ts
+.DS_Store
