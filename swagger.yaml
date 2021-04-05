@@ -21,7 +21,7 @@ tags:
 components:
   securitySchemes:
     bearerAuth:
-      type: http
+      type: https
       scheme: bearer
     oauthAuthentication:
       type: oauth2
@@ -29,7 +29,7 @@ components:
       flows:
         authorizationCode:
           authorizationUrl: https://zeit.co/oauth/authorize
-          tokenUrl: https://api.zeit.co/v2/oauth/access_token
+          tokenUrl: https://api.zeit.co/v2/oauth/access
           scopes: {}
   parameters:
     teamId:
